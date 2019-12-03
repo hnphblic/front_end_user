@@ -1,0 +1,79 @@
+<div class="com0002 scr">
+    <div class="container-fluid">
+        <ngx-spinner bdOpacity=.6 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff" type="ball-spin-clockwise">
+            <p style="color: white"> Loading... </p>
+        </ngx-spinner>
+        <app-header></app-header>
+        <section class="main-contents">
+            <div class="col-two cx">
+                <div class="col-in-Network fl">
+                    <div class="head-col">
+                        <h3 class="title">{{titleNetworkLocal}}</h3>
+                    </div>
+                    <input type="file" hidden multiple #upload id="upload" (change)="uploadFile()"/>
+                    <ul class="list-item">
+                        <li class="download" [ngClass]="fromOut? 'disable': '' "
+                            [hidden]="transfer == -1">
+                            <h4 translate>COMMON.DOWNLOAD</h4>
+                            <label class="lbl-download">
+                                <img *ngIf="existsFile" src="assets/images/load.png" alt="load" class="icon-load">
+                                <div *ngIf="(fromIn && (transfer == 0 || transfer == 1))" (click)="downloadFile()" class="bor-download"></div>
+                            </label>
+                            <p *ngIf="!existsFile" translate>{{message}}</p>
+                        </li>
+                        <li class="upload" [ngClass]="fromOut ? 'disable': ''"
+                            [hidden]="transfer == 1">
+                            <div *ngIf="(fromIn && (transfer == 0 || transfer == -1))" multiple ng2FileDrop class="drag-child" [ngClass]="{'dropzone': hasBaseDropZoneOver}"
+                            (fileOver)="fileOverBase($event)" [uploader]="uploader" (drop)="uploadFile($event)">
+                            </div>
+                            <div class="upload-box">
+                                <h4 translate>COMMON.UPLOAD</h4>
+                                <p class="text-desc" translate>COMMON.DRAG</p>
+                            </div>
+                            <div class="upload-footer" ng2FileDrop [uploader]="uploader" (drop)="uploadFile($event)" (fileOver)="fileOverBase($event)">
+                                <div class="btn-df bor-link">
+                                    <span translate>COMMON.ADD_FILE</span>
+                                    <button *ngIf="(fromIn && (transfer == 0 || transfer == -1))" (click)="upload.click()"></button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-out-Network fr">
+                    <div class="head-col">
+                        <h3 class="title">{{titleNetworkExternal}}</h3>
+                    </div>
+                    <ul class="list-item">
+                        <li class="upload" [ngClass]="fromIn ? 'disable': ''"
+                            [hidden]="transfer == -1">
+                            <div *ngIf="(fromOut && (transfer == 0 || transfer == 1))" multiple
+                                ng2FileDrop [uploader]="uploader" (drop)="uploadFile($event)" class="drag-child" [ngClass]="{'dropzone': hasBaseDropZoneOver}"
+                                (fileOver)="fileOverBase($event)">
+                            </div>
+                            <div class="upload-box">
+                                <h4 translate>COMMON.UPLOAD</h4>
+                                <p class="text-desc" translate>COMMON.DRAG</p>
+                            </div>
+                            <div class="upload-footer"  ng2FileDrop [uploader]="uploader" (drop)="uploadFile($event)" (fileOver)="fileOverBase($event)">
+                                    <div class="btn-df bor-link">
+                                        <span translate>COMMON.ADD_FILE</span>
+                                        <button *ngIf="(fromOut && (transfer == 0 || transfer == 1))" (click)="upload.click()"></button>
+                                    </div>
+                            </div>
+                        </li>
+                        <li class="download" [ngClass]="fromIn ? 'disable': ''"
+                            [hidden]="transfer == 1">
+                            <h4 translate>COMMON.DOWNLOAD</h4>
+                            <label class="lbl-download">
+                                <img *ngIf="existsFile" src="assets/images/load.png" alt="load" class="icon-load">
+                                <div *ngIf="(fromOut && (transfer == 0 || transfer == -1))" (click)="downloadFile()" class="bor-download"></div>
+                            </label>
+                            <p *ngIf="!existsFile" translate>{{message}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <app-footer></app-footer>
+        </section>
+    </div>
+</div>
